@@ -1,12 +1,12 @@
-let app = require('express')();
 let express = require('express');
 let path = require('path');
-let http = require('http').Server(app);
-let router = require('./router.js');
 let flash = require('connect-flash');
 var session = require('express-session');
 
 require('./db/mongoose');
+let router = require('./router.js');
+
+let app = express();
 
 app.use(session({
   cookie: { maxAge: 60000 },
@@ -35,6 +35,6 @@ app.use(expressLayouts);
 // Add Route file with app
 app.use('/', router);
 
-http.listen(process.env.PORT, function () {
+app.listen(process.env.PORT, function () {
   console.log('Server is up and running on PORT ' + process.env.PORT);
 });

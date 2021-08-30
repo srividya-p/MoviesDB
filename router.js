@@ -17,14 +17,18 @@ router.use((req, res, next) => {
     next()
 })
 
-// Dashboard
 router.get('/', async (req, res) => {
-    let movies = await Movie.find()
-    res.locals = { title: 'Movies DB' };
-    res.render('Movies/all_movies', {
-        message: [req.flash('success'), req.flash('error')],
-        movies
-    });
+    try {
+        let movies = await Movie.find()
+        // res.send(movies);
+        res.locals = { title: 'Movies DB' };
+        res.render('Movies/all_movies', {
+            message: [req.flash('success'), req.flash('error')],
+            movies
+        });
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 router.get('/add-movie', (req, res) => {
@@ -36,6 +40,7 @@ router.post('/movie-added', async (req, res) => {
     let movie_doc = new Movie(req.body);
     try {
         await movie_doc.save();
+        // res.send({message: 'Movie added to Database!'})
         req.flash('success', 'Movie added to Database!')
         res.redirect('/')
     } catch (e) {
@@ -51,6 +56,7 @@ router.get('/update-movie', async (req, res) => {
 
     try {
         let movie = await Movie.findOne({ _id: id })
+        // res.send(movie)
         res.locals = { title: 'Update Movie' };
         res.render('UpdateMovie/update_movie', {
             movie
@@ -64,6 +70,7 @@ router.get('/update-movie', async (req, res) => {
 router.put('/movie-updated/:id', async (req, res) => {
     try {
         await Movie.findOneAndUpdate({ _id: req.params.id }, req.body, { runValidators: true })
+        // res.send({message: 'Movie updated successfully!'})
         req.flash('success', 'Movie updated successfully!')
         res.redirect('/')
     } catch (e) {
@@ -75,6 +82,7 @@ router.put('/movie-updated/:id', async (req, res) => {
 router.delete('/delete-movie/:id', async (req, res) => {
     try {
         await Movie.deleteOne({ _id: req.params.id })
+        // res.send({message: 'Movie removed from Database!'})
         req.flash('success', 'Movie removed from Database!')
         res.redirect('/')
     } catch (e) {

@@ -1,0 +1,70 @@
+<%- contentFor('HeaderCss') %>
+    <!-- perticular page css -->
+    <style>
+        label,
+        input,
+        button {
+            font-size: medium;
+        }
+    </style>
+    <%- contentFor('body') %>
+
+        <div class="wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card m-b-20">
+                            <div class="card-body">
+                                <form method="POST" action="/movie-updated/<%= movie._id %>">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <div class="form-group">
+                                        <label>Movie Name</label>
+                                        <input required type="text" name="movie_name" style="font-size: 15px;"
+                                            class="colorpicker-default form-control" value="<%= movie.movie_name%>"
+                                            placeholder="Enter a Movie">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Movie Image</label>
+                                        <input required type="text" name="image_url" style="font-size: 15px;"
+                                            class="colorpicker-default form-control" value="<%= movie.image_url%>"
+                                            placeholder="Enter a Link">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Release Year</label>
+                                        <input required type="text" name="release_year"
+                                            class="colorpicker-default form-control" style="font-size: 15px;"
+                                            value="<%= movie.release_year%>" placeholder="Enter Release Year">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea rows="5" required name="description" style="font-size: 15px;"
+                                            class="colorpicker-default form-control"
+                                            placeholder="Enter Description"><%= movie.description%></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <button style="float: left;" type="submit" class="btn-lg btn-info waves-effect waves-light"><i
+                                                    class="mdi mdi-pencil"></i><span></span>&emsp;Update</button> &emsp;&emsp;
+
+                                            <a href="/" class="btn-lg btn-primary waves-effect waves-light" style="color: white;"><i
+                                                    class="mdi mdi-arrow-left"></i><span></span>&emsp;Back</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div> <!-- end container-fluid -->
+        </div>
+        <!-- end wrapper -->
+        <%- contentFor('FooterJs') %>
+            <!--Morris Chart-->
+            <script src="public/plugins/morris/morris.min.js"></script>
+            <script src="public/plugins/raphael/raphael-min.js"></script>
+            <script src="public/assets/pages/dashboard.js"></script>
+            <script src="public/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>

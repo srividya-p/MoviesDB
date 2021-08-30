@@ -1,0 +1,115 @@
+<%- contentFor('HeaderCss') %>
+    <!-- perticular page css -->
+
+    <link href="public/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+
+    <script src="public/plugins/sweet-alert2/sweetalert2.min.js"></script>
+
+    <%- contentFor('body') %>
+
+        <div class="wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card m-b-20">
+                            <div class="card-body">
+                                <% if(message[0].length> 0){ %>
+                                    <div style="font-size: 15px;"
+                                        class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <strong>Success!</strong>&nbsp;<%= message[0] %>
+                                    </div>
+                                    <% } %>
+
+                                        <% if(message[1].length> 0){ %>
+                                            <div style="font-size: 15px;"
+                                                class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <strong>Oh snap!</strong>&nbsp;<%= message[1] %>
+                                            </div>
+                                            <% } %>
+                                                <div class="row">
+                                                    <% for(let i=0; i<movies.length; i++) { %>
+
+                                                        <div class="col-xl-2">
+                                                            <div class="card m-b-30">
+                                                                <img class="card-img-top img-fluid"
+                                                                    src="<%= movies[i].image_url %>"
+                                                                    alt="Card image cap" style="height: 350px;">
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title font-16 mt-0">
+                                                                        <%= movies[i].movie_name %>
+                                                                    </h4>
+                                                                    <p class="card-text">
+                                                                        <%= movies[i].release_year %>
+                                                                    </p>
+                                                                    <button href="" data-toggle="modal"
+                                                                        data-target="#modal<%=i %>"
+                                                                        style="font-size:18px;"
+                                                                        class="btn btn-primary waves-effect waves-light"><i
+                                                                            class="ti ti-eye"></i></button>
+                                                                    <a href="/update-movie?id=<%= movies[i]._id %>"
+                                                                        class="btn btn-info waves-effect waves-light"
+                                                                        style="font-size:18px;"><i
+                                                                            class="ti ti-pencil"></i></a>
+
+                                                                    <a href="/delete-movie/<%= movies[i]._id %>?_method=DELETE"
+                                                                        onclick="confirmation(event)"
+                                                                        class="btn btn-danger waves-effect waves-light"
+                                                                        style="font-size:18px;"><i
+                                                                            class="ti ti-trash"></i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="modal<%= i %>" class="modal fade bs-example-modal-center" tabindex="-1"
+                                                            role="dialog" aria-labelledby="mySmallModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title mt-0" id="myModalLabel">
+                                                                            <%= movies[i].movie_name %> (<%=
+                                                                                    movies[i].release_year %>)
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal"
+                                                                            aria-hidden="true">×</button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <img class="card-img-top img-fluid"
+                                                                            src="<%= movies[i].image_url %>"
+                                                                            alt="Card image cap"
+                                                                            style="height: 220px; width:150px; float:left; margin-right:15px;">
+                                                                        <p
+                                                                            style="text-align: justify; font-size: 16px;">
+                                                                            <%= movies[i].description %>
+                                                                        </p>
+                                                                    </div>
+                                                                </div><!-- /.modal-content -->
+                                                            </div><!-- /.modal-dialog -->
+                                                        </div><!-- /.modal -->
+
+                                                        <% } %>
+                                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div> <!-- end container-fluid -->
+        </div>
+        <!-- end wrapper -->
+        <%- contentFor('FooterJs') %>
+            <!--Morris Chart-->
+            <script src="public/plugins/morris/morris.min.js"></script>
+            <script src="public/plugins/raphael/raphael-min.js"></script>
+            <script src="public/assets/pages/dashboard.js"></script>
+
+            <script src="public/assets/js/delete_confirm.js"></script>

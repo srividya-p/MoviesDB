@@ -2,12 +2,27 @@ let app = require('express')();
 let express = require('express');
 let path = require('path');
 let http = require('http').Server(app);
-let bodyParser = require('body-parser');
 let router = require('./router.js');
+let flash = require('connect-flash');
+var session = require('express-session');
+
+require('./db/mongoose');
+
+app.use(session({
+  cookie: { maxAge: 60000 },
+  secret: 'moviedb',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(flash())
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Access public folder from root
 app.use('/public', express.static('public'));
-app.get('/layouts/', function(req, res) {
+app.get('/layouts/', function (req, res) {
   res.render('view');
 });
 
@@ -18,8 +33,8 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
 // Add Route file with app
-app.use('/', router); 
+app.use('/', router);
 
-http.listen(process.env.PORT, function(){
-  console.log('Server is up and running on PORT '+ process.env.PORT);
+http.listen(process.env.PORT, function () {
+  console.log('Server is up and running on PORT ' + process.env.PORT);
 });
